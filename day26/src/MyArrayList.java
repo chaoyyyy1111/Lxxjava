@@ -7,25 +7,23 @@ private static final int intCapacity = 10;
     public int[] getElem() {
         return elem;
     }
-
     public void setElem(int[] elem) {
         this.elem = elem;
     }
-
     public int getUsedSize() {
         return usedSize;
     }
-
     public void setUsedSize(int usedSize) {
+
         this.usedSize = usedSize;
     }
     public MyArrayList()  {
     this.elem = new int[intCapacity];
     this.usedSize = 0;
-}
-public boolean isFull() {
-    return this.usedSize == elem.length;
-}
+    }
+    public boolean isFull() {
+        return this.usedSize == elem.length;
+    }
 //添加数据
 public void add(int pos,int data) {
     if(pos < 0 || pos > this.usedSize) {
@@ -66,6 +64,7 @@ public void add(int pos,int data) {
         throw new RuntimeException("找不到");
     }
     private boolean isEmpty() {
+
         return this.usedSize == 0;
     }
     //获取pos位置的元素
