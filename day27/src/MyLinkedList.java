@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
 class Node {
     public int data;
     public Node next;
@@ -9,7 +11,17 @@ class Node {
 }
 public class MyLinkedList {
      public Node head;
-public void addFirst(int data) {
+    public void addFirst1(Node cur) {
+        Node node = cur;
+        if (this.head == null) {
+            this.head = node;
+            return;
+        }
+        node.next = this.head;
+        this.head = node;
+
+    }
+     public void addFirst(int data) {
     Node node = new Node(data);
     if (this.head == null) {
         this.head = node;
@@ -39,6 +51,14 @@ public void display() {
     }
     System.out.println();
 }
+    public void display2(Node newHead) {
+        Node cur = newHead;
+        while(cur != null) {
+            System.out.print(cur.data+" ");
+            cur = cur.next;
+        }
+        System.out.println();
+    }
 public boolean contains(int key) {
     Node cur = this.head;
     while(cur != null) {
@@ -84,50 +104,105 @@ public void addIndex(int index,int data) {
     node.next = cur.next;
     cur.next = node;
 }
-private int search(int key) {
-        Node cur = this.head;
-        int count = 0;
-        while(cur != null) {
-            if(cur.data == key) {
-                return count;
+public Node middleNode() {
+    Node fast = this.head;
+    Node slow = this.head;
+    while(fast != null && fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    return slow;
+    }
+public Node middleK(int key) {
+     Node fast = this.head;
+     Node slow = this.head;
+     while(key - 1 != 0) {
+         fast = fast.next;
+         key--;
+     }
+     while(fast.next != null) {
+         fast = fast.next;
+         slow = slow.next;
+     }
+return slow;
+    }
+public Node reverse() {
+    Node prev = null;
+    Node cur = this.head;
+    Node newHead = cur.next;
+    while(cur != null) {
+        Node curNext = cur.next;//防止空指针异常
+        if(curNext == null) {
+            newHead = cur;
+        }
+        cur.next = prev;
+        prev = cur;
+        cur = curNext;
+    }
+    return newHead;
+}
+public Node reverseHead() {
+        if (this.head == null) {
+            return null;
+        }
+        Node cur = this.head.next;
+        Node curNext = cur.next;
+        Node newHead = null;
+        this.head.next = null;
+        while (cur != null) {
+            curNext = cur.next;
+            if (cur.next == null) {
+                newHead = cur;
             }
-            count++;
+            addFirst1(cur);
+            cur = curNext;
+        }
+        return newHead;
+    }
+private Node searchPrev(int key) {
+    Node prev = this.head;
+    while(prev.next != null) {
+        if(prev.next.data == key) {
+            return prev;
+        } else {
+            prev = prev.next;
+        }
+    }
+    return null;
+}
+public void remove(int key) {
+    if(this.head == null) {
+       return;
+    }
+    if(this.head.data == key) {
+        this.head = this.head.next;
+    }
+    Node prev = searchPrev(key);
+    if(prev == null) {
+        System.out.println("找不到该数字");
+        return;
+    }
+    Node del = prev.next;
+    prev.next = del.next;
+}
+
+public void removeAllKey(int key) {
+    Node prev = this.head;
+    Node cur = this.head.next;
+    while(cur != null) {
+        if(cur.data == key) {
+            prev.next = cur.next;
+            cur = cur.next;
+        } else {
+            prev = cur;
             cur = cur.next;
         }
-        throw new RuntimeException("找不到该数字");
     }
-public void remove(int key) {
-    int index = search(key);
-    if(index == 0) {
+    if(this.head.data == key) {
         this.head = this.head.next;
-        return;
-    }
-    if(index == size()-1) {
-        Node cur = searchIndex(size()-1);
-        cur.next = null;
-        return;
-    }
-    Node cur = searchIndex(index+1);
-    Node curBefore = searchIndex(index);
-    curBefore.next = cur.next;
-}
-public void removeAllKey(int key) {
-    while(contains(key)) {
-        int index = search(key);
-        if(index == 0) {
-            this.head = this.head.next;
-            return;
-        }
-        if(index == size()-1) {
-            Node cur = searchIndex(size()-1);
-            cur.next = null;
-            return;
-        }
-        Node cur = searchIndex(index+1);
-        Node curBefore = searchIndex(index);
-        curBefore.next = cur.next;
     }
 }
+
 public void clear() {
     this.head = null;
 }
