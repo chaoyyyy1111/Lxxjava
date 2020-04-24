@@ -114,11 +114,20 @@ public Node middleNode() {
     return slow;
     }
 public Node middleK(int key) {
+     if(key < 0) {
+         System.out.println("k的位置不合法");
+         return null;
+     }
      Node fast = this.head;
      Node slow = this.head;
      while(key - 1 != 0) {
-         fast = fast.next;
-         key--;
+         if(fast.next != null) {
+             fast = fast.next;
+             key--;
+         } else {
+             System.out.println("没有这个数");
+             return null;
+         }
      }
      while(fast.next != null) {
          fast = fast.next;
@@ -129,7 +138,7 @@ return slow;
 public Node reverse() {
     Node prev = null;
     Node cur = this.head;
-    Node newHead = cur.next;
+    Node newHead = null;
     while(cur != null) {
         Node curNext = cur.next;//防止空指针异常
         if(curNext == null) {
@@ -202,8 +211,93 @@ public void removeAllKey(int key) {
         this.head = this.head.next;
     }
 }
-
-public void clear() {
+public Node partition(int x) {
+       Node bs = null;
+       Node be = null;
+       Node as = null;
+       Node ae = null;
+       Node cur = this.head;
+       while(cur != null ) {
+           if(cur.data < x) {
+               if(bs == null) {
+                   bs = cur;
+                   be = cur;
+               }else{
+                   be.next = cur;
+                   be = be.next;
+               }
+           }else {
+               if(as == null) {
+                   as = cur;
+                   ae = cur;
+               }else{
+                   ae.next = cur;
+                   ae = be.next;
+               }
+           }
+       cur = cur.next;
+       }
+       if(bs == null) {
+           return as;
+       }
+       be.next = as;
+       if(ae != null) {
+           ae.next = null;
+       }
+    return bs;
+    }
+    public Node deleteDuplication() {
+        Node cur = this.head;
+        Node newHead = new Node(-1);
+        Node tmp = newHead;
+        while(cur != null) {
+            if(cur.next != null && cur.data == cur.next.data) {
+                while(cur.next != null && cur.data == cur.next.data) {
+                    cur = cur.next;
+                }
+                cur = cur.next;
+            } else {
+                tmp.next = cur;
+                tmp = tmp.next;
+                cur = cur.next;
+            }
+        }
+        tmp.next = null;
+        return newHead.next;
+    }
+    public boolean Language() {
+        if(this.head == null) {
+            return false;
+        }
+        if(this.head.next == null) {
+            return true;
+        }
+        Node fast = this.head;
+        Node slow = this.head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        Node cur = slow.next;
+        while(cur != null) {
+            Node curNext = cur.next;
+            cur.next = slow;
+            slow = cur;
+            cur = curNext;
+        }
+        while(slow != this.head) {
+            if(slow.data != this.head.data) {
+                return false;
+            }
+            if(this.head.next == slow) {
+                return true;
+            }
+            slow = slow.next;
+            this.head = this.head.next;
+        }
+        return true;
+    }
+    public void clear() {
     this.head = null;
 }
 }

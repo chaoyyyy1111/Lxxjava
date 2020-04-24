@@ -5,6 +5,8 @@ public class TestDemo {
         for (int i = 0; i < 5; i++) {
             myLinkedList.addIndex(i,i);
         }
+        myLinkedList.clear();
+        System.out.println("hahahahahaha");
         myLinkedList.display();
         Node ret = myLinkedList.middleNode();
         System.out.println(ret.data);
