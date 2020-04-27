@@ -1,5 +1,3 @@
-
-
 class Node {
     public int data;
     public Node next;
@@ -62,18 +60,17 @@ public void addLast(int data) {
     return count;
 }
     private void checkIndex(int index) {
-        if(index < 0 || index > size()) {
-            throw new RuntimeException("index不合法");
-        }
+    if(index < 0 || index >size()) {
+        throw new RuntimeException("index位置不合法");
     }
+}
     private Node searchIndex(int index) {
-        Node cur = this.head;
-        while(index != 0) {
-            cur = cur.next;
-            index--;
-        }
-        return cur;
+    Node cur = this.head;
+    while(index != 0) {
+        cur = cur.next;
     }
+    return cur;
+}
     public void addIndex(int index,int data){
         checkIndex(index);
         if(index == 0) {
@@ -86,39 +83,59 @@ public void addLast(int data) {
         }
         Node cur = searchIndex(index);
         Node node = new Node(data);
-        cur.prev.next = node;
         node.next = cur;
-        cur.prev = node;
         node.prev = cur.prev;
-
-    }
+        cur.prev.next = node;
+        cur.prev = node;
+}
     public int remove(int key){
         Node cur = this.head;
-        while (cur != null) {
+        while(cur != null) {
             if(cur.data == key) {
-                int oldData = cur.data;
+                int oldDate = cur.data;
                 if(cur == this.head) {
                     this.head = this.head.next;
                     this.head.prev = null;
-                }else {
-                     cur.prev.next = cur.next;
-                     if(cur.next != null) {
-                         cur.next.prev = cur.prev;
-                     } else {
-                         this.tail = cur.prev;
-                     }
+                } else {
+                    cur.prev.next = cur.next;
+                    if(cur.next != null) {
+                        cur.next.prev = cur.prev;
+                    } else {
+                        this.tail = cur.prev;
+                    }
                 }
-                return oldData;
+            return oldDate;
             }
             cur = cur.next;
         }
-        return -1;
+    return -1;
+}
+    public void removeAllKey(int key){
+        Node cur = this.head;
+        while(cur != null) {
+            if(cur.data == key) {
+                if(cur == this.head) {
+                    this.head = this.head.next;
+                    if(this.head != null) {
+                        this.head.prev = null;
+                    }
+                } else {
+                    cur.prev.next = cur.next;
+                    if(cur.next != null) {
+                        cur.next.prev = cur.prev;
+                    } else {
+                        this.tail = cur.prev;
+                    }
+                }
+            }
+            cur = cur.next;
+        }
     }
-    public void clear() {
+public void clear() {
     while(this.head != null) {
         Node cur = this.head.next;
-        this.head.prev = null;
         this.head.next = null;
+        this.head.prev = null;
         this.head = cur;
     }
     this.tail = null;
