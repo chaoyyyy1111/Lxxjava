@@ -124,4 +124,35 @@ public class Test1 {
         }
         return bs;
     }
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = new ListNode(-1);
+        ListNode newHead = pre;
+        pre.next = head;
+        ListNode cur = head;
+        ListNode curNext = cur.next;
+        while(cur != null && curNext != null) {
+            if(cur.val == curNext.val) {
+                while(curNext != null && cur.val == curNext.val) {
+                    cur = cur.next;
+                    curNext = cur.next;
+                }
+                pre.next = curNext;
+                if(curNext != null) {
+                    cur = pre.next;
+                }
+                if(cur != null) {
+                    curNext = cur.next;
+                }
+            } else {
+                pre = pre.next;
+                cur = pre.next;
+                curNext = cur.next;
+            }
+
+        }
+        return newHead.next;
+    }
 }
