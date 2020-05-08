@@ -105,7 +105,7 @@ public class Test {
         System.out.println(myCompare(str1,str2));
     }
 
-    public static void main(String[] args) {
+    public static void main9(String[] args) {
         String str = "aacd";
         System.out.println(str.replace('a','p'));
         String str1 = "aaaacd";
@@ -115,4 +115,28 @@ public class Test {
         System.out.println(str2.trim());
         System.out.println(str1.replaceFirst("aa","pp"));
     }
+    public static String reverse(String str,int begin,int end) {
+        char[] chars = str.toCharArray();
+        while(begin < end) {
+            char tmp = chars[begin];
+            chars[begin] = chars[end];
+            chars[end] = tmp;
+            begin++;
+            end--;
+        }
+        String s = new String(chars);
+        return s;
+    }
+    public static String func(String str,int n) {
+        String str1 = reverse(str,0,n-1);
+        String str2 = reverse(str1,n,str.length()-1);
+        String str3 = reverse(str2,0,str.length()-1);
+    return str3;
+    }
+    public static void main(String[] args) {
+        String str = "abcdefg";
+        String ret = func(str,3);
+        System.out.println(ret);
+    }
+
 }
