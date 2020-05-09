@@ -120,5 +120,7 @@ public class TestDemo {
         stringBuffer.append("a");
         stringBuffer.toString();
 
+        System.out.println(str.substring(0,1));
+
     }
 }

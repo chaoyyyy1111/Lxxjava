@@ -80,7 +80,7 @@ public class Test {
         System.out.println(Arrays.toString(be));
     }
 
-    public static int myCompare(String str1,String str2 ) {
+    public static int myCompare1(String str1,String str2 ) {
         int len1 = str1.length();
         int len2 = str2.length();
         if(len1 != len2) {
@@ -133,10 +133,117 @@ public class Test {
         String str3 = reverse(str2,0,str.length()-1);
     return str3;
     }
-    public static void main(String[] args) {
+    public static void main10(String[] args) {
         String str = "abcdefg";
         String ret = func(str,3);
         System.out.println(ret);
+    }
+
+    public static String myReplace(String str,String s,String b) {
+        String[] strings = str.split(s);
+        StringBuffer ret = new StringBuffer("");
+        for (int i = 0; i < strings.length-1; i++) {
+            ret.append(strings[i]).append(b);
+        }
+        ret.append(strings[strings.length-1]);
+        return ret.toString();
+    }
+    public static int myIndexOf(String str,String s,int k) {
+        int len = s.length();
+        if(len > str.length()) {
+            return -1;
+        }
+        for (int i = k; i < str.length()-len+1; i++) {
+            if(s.equals(str.substring(i,i+len))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static boolean myContains(String str,String s) {
+        int len = s.length();
+        if(len > str.length()) {
+            return false;
+        }
+        for (int i = 0; i < str.length()-len+1; i++) {
+            if(s.equals(str.substring(i,i+len))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static int myCompare(String str1,String str2) {
+        if(str1.length() != str2.length()) {
+            return str1.length() - str2.length();
+        }
+        for (int i = 0; i < str1.length() ; i++) {
+            if(str1.charAt(i) != str2.charAt(i)) {
+                return str1.charAt(i) - str2.charAt(i);
+            }
+        }
+        return 0;
+    }
+    public static String[] mySplit(String str,String s) {
+        int[] index = new int[str.length()];
+        index[0] = -1;
+        int len =s.length();
+        String[] string = {str};
+        if(len > str.length()) {
+            return string;
+        }
+        int count = 1;
+        if(len == 1) {
+            for (int i = 0; i < str.length()-len+1; i++) {
+                if(s.equals(str.substring(i,i+len))) {
+                    index[count] = i;
+                    count++;
+                }
+            }
+        } else {
+            for (int i = 0; i < str.length()-len+1; i++) {
+                if(s.equals(str.substring(i,i+len))) {
+                    index[count] = i;
+                    count++;
+                    index[count] = i+len-1;
+                    count++;
+
+                }
+            }
+        }
+        if(count == 1) {
+            return string;
+        }
+
+        if(len == 1) {
+            int j = 0;
+            String[] ret = new String[count];
+            for (int i = 0; i < count -1 ; i++) {
+                ret[j] = str.substring(index[i]+1,index[i+1]);
+                j++;
+            }
+            ret[j] = str.substring(index[count-1]+1);
+            return ret;
+        } else {
+            int j = 1;
+            String[] ret = new String[count/2+1];
+            for (int i = 2; i < count -1  ; i += 2) {
+                ret[0] = str.substring(0,index[1]);
+                ret[j] = str.substring(index[i]+1,index[i+1]);
+                j++;
+            }
+            ret[j] = str.substring(index[count-1]+1);
+            if(ret[j].equals("")) {
+                ret = Arrays.copyOfRange(ret,0,j);
+            }
+
+            return ret;
+        }
+    }
+    public static void main(String[] args) {
+        String str= "abcefeabc";
+        str.split("efe");
+        System.out.println(Arrays.toString(str.split("efe")));
+        System.out.println(Arrays.toString(mySplit(str,"efe")));
     }
 
 }
