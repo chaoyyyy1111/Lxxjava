@@ -26,7 +26,7 @@ public class MyStack {
         }
         return this.elem[this.top-1];
     }
-    public int poll() {
+    public int pop() {
         if(empty()) {
             throw new RuntimeException("栈为空");
         }
