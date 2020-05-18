@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Node {
     public Node left;
     public Node right;
@@ -179,5 +181,117 @@ public class BinaryTree {
         }
         return leftTree.val == rightTree.val && isSymmctricChild(leftTree.left,rightTree.right) &&
                 isSymmctricChild(leftTree.right,rightTree.left);
+    }
+    void levelOrderTraversal(Node root){
+
+        if(root == null) {
+            return;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            Node cur = queue.poll();
+            if(cur != null) {
+                System.out.print(cur.val+"");
+                if(cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if(cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+        }
+        System.out.println();
+
+    }
+    public List<List<Character>> levelOrder(Node root) {
+        List<List<Character>> ret = new ArrayList<>();
+        if(root == null) {
+            return ret;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            List<Character> list = new ArrayList<>();
+            int qSize = queue.size();
+            while(qSize > 0) {
+                Node cur = queue.poll();
+                if(cur != null) {
+                    list.add(cur.val);
+                    if(cur.left != null) {
+                        queue.offer(cur.left);
+                    }
+                    if(cur.right != null) {
+                        queue.offer(cur.right);
+                    }
+                }
+                qSize--;
+            }
+            ret.add(list);
+        }
+        return ret;
+    }
+    public boolean isCompleteTree(Node root) {
+        Queue<Node> queue = new LinkedList<>();
+        if(root == null) {
+            return true;
+        }
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            Node cur = queue.poll();
+            if(cur != null) {
+                queue.offer(cur.left);
+                queue.offer(cur.right);
+            } else {
+                break;
+            }
+        }
+        while(!queue.isEmpty()) {
+            Node cur2 = queue.poll();
+            if(cur2 != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+    // 中序遍历
+    void inOrderTraversalNor(Node root){
+        Stack<Node> stack = new Stack<>();
+        if(root == null) {
+            return;
+        }
+        Node cur = root;
+        while(cur != null || !stack.empty()) {
+            while(cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            Node top = stack.pop();
+            System.out.print(top+" ");
+            cur = top.right;
+        }
+    }
+    void postOrderTraversalNor(Node root) {
+        Stack<Node> stack = new Stack<>();
+        if(root == null) {
+            return;
+        }
+        Node cur = root;
+        Node prev = null;
+        while(cur != null || !stack.empty()) {
+            while(cur != null ) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.peek();
+            if(cur.right == null || cur.right == prev) {
+                System.out.print(cur.val);
+                stack.pop();
+                prev = cur;
+                cur = null;
+            } else {
+                cur = cur.right;
+            }
+        }
     }
 }

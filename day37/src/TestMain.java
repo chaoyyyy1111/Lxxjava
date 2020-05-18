@@ -2,6 +2,7 @@ public class TestMain {
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
         Node root = binaryTree.buildTree();
+        binaryTree.inOrderTraversalNor(root);
         binaryTree.getSize1(root);
         System.out.println(BinaryTree.size);
         System.out.println(binaryTree.getSize2(root));
