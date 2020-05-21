@@ -247,8 +247,7 @@ public class BinaryTree {
             }
         }
         while(!queue.isEmpty()) {
-            Node cur2 = queue.poll();
-            if(cur2 != null) {
+            if(queue.poll() != null) {
                 return false;
             }
         }
@@ -293,5 +292,34 @@ public class BinaryTree {
                 cur = cur.right;
             }
         }
+    }
+    public Node prev = null;
+    public void func (Node root) {
+        if(root == null) {
+            return;
+        }
+        func(root.left);
+        root.left = prev;
+        if(prev != null) {
+            prev.right = root;
+        }
+        prev = root;
+        func(root.right);
+    }
+    public Node increasingBST(Node root) {
+        if(root == null) {
+            return null;
+        }
+        func(root);
+        Node head = root;
+        while(head.left != null) {
+            head = head.left;
+        }
+        while(prev != head) {
+            Node prevLeft = prev.left;
+            prev.left = null;
+            prev = prevLeft;
+        }
+        return head;
     }
 }
