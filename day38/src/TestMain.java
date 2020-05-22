@@ -20,6 +20,7 @@ public class TestMain {
         System.out.println(pq.peek());
         pq.poll();
         System.out.println(pq.peek());
+        int[][] nums;
 
     }
 }
