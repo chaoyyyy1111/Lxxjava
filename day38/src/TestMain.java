@@ -23,21 +23,26 @@ public class TestMain {
         pq.poll();
         System.out.println(pq.peek());
         */
-       int[] array = new int[10000];
+       /*int[] array = new int[10000];
        Sort sort = new Sort();
         Random random = new Random();
         for (int i = 0; i < array.length ; i++) {
             array[i] = random.nextInt(10000);
         }
         long start = System.currentTimeMillis();
-        /*int[] drr = {5,3,1};
+        int[] drr = {5,3,1};
         for(int i = 0 ; i < drr.length;i++) {
             sort.shellSort(array,drr[i]);
         }
-         */
+
         sort.bubbleSort(array);
         long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        System.out.println(end - start);*/
+        Sort sort = new Sort();
+        int[] arr = {1,3,5,8,9};
+        System.out.println(Arrays.toString(arr));
+        sort.quickSort(arr);
+        System.out.println(Arrays.toString(arr));
 
     }
 }
