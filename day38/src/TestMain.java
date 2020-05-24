@@ -1,8 +1,10 @@
+import java.util.Arrays;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 public class TestMain {
     public static void main(String[] args) {
-        int[] array = {1,2,3,4,5,6};
+       /* int[] array = {1,2,3,4,5,6};
         TestHeap testHeap = new TestHeap();
         testHeap.createHeap(array);
         testHeap.show();
@@ -20,7 +22,22 @@ public class TestMain {
         System.out.println(pq.peek());
         pq.poll();
         System.out.println(pq.peek());
-        int[][] nums;
+        */
+       int[] array = new int[10000];
+       Sort sort = new Sort();
+        Random random = new Random();
+        for (int i = 0; i < array.length ; i++) {
+            array[i] = random.nextInt(10000);
+        }
+        long start = System.currentTimeMillis();
+        /*int[] drr = {5,3,1};
+        for(int i = 0 ; i < drr.length;i++) {
+            sort.shellSort(array,drr[i]);
+        }
+         */
+        sort.bubbleSort(array);
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
 
     }
 }
