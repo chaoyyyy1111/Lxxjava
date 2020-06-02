@@ -1,4 +1,6 @@
-public class TestMain {
+import java.util.*;
+
+public   class TestMain {
     public static void main1(String[] args) {
         BSTree bsTree = new BSTree();
         int[] array = {2,3,1,5,7,9,11};
@@ -19,12 +21,83 @@ public class TestMain {
         hashBuck.put(11,11);
         System.out.println("================");
     }
+    public static int partition(int[] a,int left,int right) {
+        int tmp = a[left];
+        while(left < right) {
+            while(left < right && a[right] >= tmp) {
+                right--;
+            }
+            a[left] = a[right];
+            while(left < right && a[left] <= tmp) {
+                left++;
+            }
+            a[right] = a[left];
+        }
+        a[left] = tmp;
+        return left;
+    }
+    public static int findKth(int[] a, int n, int K) {
+        // write code here
+        Arrays.sort(a);
+        int left = 0;
+        int right = n-1;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(left);
+        stack.push(right);
+        int ret = 0;;
+        while(!stack.empty()) {
+            right = stack.pop();
+            left = stack.pop();
+            int par = partition(a,left,right);
+
+            if(par == K-1) {
+                ret = a[par];
+                break;
+            }
+            if(left+1 < par) {
+                stack.push(left);
+                stack.push(par-1);
+            }
+            if(par+1 < right) {
+                stack.push(par+1);
+                stack.push(right);
+            }
+        }
+        return ret;
+    }
+
+    public static int func(int n) {
+        int count = 0;
+        while(n/3 != 0) {
+            count += n/3;
+            n = n/3 + n % 3;
+            if(n == 2) {
+                n++;
+            }
+        }
+        return count;
+    }
 
     public static void main(String[] args) {
-        Person person1 = new Person(12);
-        Person person2 = new Person(12);
-        HashBuck2<Person,String> hb = new HashBuck2<>();
-        hb.put(person1,"lxx");
-        System.out.println(hb.get(person2));
+        /*Scanner scan = new Scanner(System.in);
+        Queue<Integer> queue = new LinkedList<>();
+        while(scan.hasNext()) {
+            int n = scan.nextInt();
+            if(n != 0) {
+                queue.offer(n);
+            } else {
+                break;
+            }
+        }
+        while(!queue.isEmpty()) {
+            System.out.println(func(queue.poll()));
+        }
+        System.out.println("==================");
+         */
+        String str = "abc";
+        System.out.println(str.substring(3, 3));
+
     }
+
+
 }

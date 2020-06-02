@@ -98,6 +98,7 @@ public boolean remove(int key) {
        return false;
 }
 public void preOrder(Node root) {
+
     if(root == null) {
         return;
     }
