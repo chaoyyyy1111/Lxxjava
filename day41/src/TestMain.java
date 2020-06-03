@@ -1,7 +1,22 @@
 import java.util.*;
 
-public   class TestMain {
+class Student {
+    public int age;
+    public String name;
+    public static int count;
+    public final int size = 10;
+    public static final int COUNT = 99;
+    public static void func() {
+        
+        count = 0;
+    }
+    public void func1() {
+
+    }
+}
+public class TestMain {
     public static void main1(String[] args) {
+
         BSTree bsTree = new BSTree();
         int[] array = {2,3,1,5,7,9,11};
         for(int i:array) {
