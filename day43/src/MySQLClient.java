@@ -21,18 +21,23 @@ public class MySQLClient {
         try {
             Connection connection = DriverManager.getConnection(url,user,password);
             Scanner scan = new Scanner(System.in);
+            System.out.println("欢迎使用Mysql");
             System.out.print("mysql>");
             while(true) {
                 String str = scan.nextLine();
                 if(str.equalsIgnoreCase("quit")) {
                     break;
                 }
+                if(!str.endsWith(";")) {
+                    System.out.print("->");
+                    str += scan.nextLine();
+                }
+                str = str.substring(0,str.length() - 1);
                 if(str.startsWith("select") || str.startsWith("show")) {
                     executeQuery(connection,str);
                 } else {
                     executeUpdate(connection,str);
                 }
-
                 System.out.print("mysql>");
             }
             connection.close();
@@ -45,21 +50,35 @@ public class MySQLClient {
     private static void executeUpdate(Connection connection, String str) throws SQLException {
         Statement statement = connection.createStatement();
         int r = statement.executeUpdate(str);
-        System.out.format("%d rows is affacted",r);
+        System.out.format("%d rows is affacted %n",r);
         statement.close();
     }
 
     private static void executeQuery(Connection connection, String str) throws SQLException {
+        long b = System.currentTimeMillis();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(str);
         int k = resultSet.getMetaData().getColumnCount();
+        for (int i = 0; i < k; i++) {
+            String s = resultSet.getMetaData().getColumnLabel(i+1);
+            System.out.print(s + " ");
+        }
+        System.out.println();
+        int count = 0;
         while(resultSet.next()) {
             for (int i = 0; i < k ; i++) {
                 String s = resultSet.getString(i+1);
-                System.out.print(s+",");
+                if(i != k-1) {
+                    System.out.print(s+",");
+                } else {
+                    System.out.print(s);
+                }
             }
             System.out.println();
+            count++;
         }
+        long e = System.currentTimeMillis();
+        System.out.printf("%d rows in set (%.2f sec )%n",count,(e - b) /1000.0);
         resultSet.close();
         statement.close();
     }
