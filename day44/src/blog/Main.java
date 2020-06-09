@@ -17,17 +17,16 @@ public class Main {
         featureList.add("评论指定文章-要求先登录");
         featureList.add("点赞指定文章-要求先登录");
     }
-    static class UserRegisterAction implements Action {
-        @Override
-        public void run() {
-            System.out.println("用户注册");
-        }
-    }
     private static void initActionsList() {
-          actionsList.add(new UserRegisterAction());
+        actionsList.add(new UserRegisterAction());
+        actionsList.add(new userLoginAction());
+        actionsList.add(new ArticleListAction());
+        actionsList.add(new ArticlePublishAction());
+        actionsList.add(new ArticleDetailAction());
     }
     public static void main(String[] args) {
-         Scanner scan = new Scanner(System.in);
+        DBUtil.initDataSource();
+        Scanner scan = new Scanner(System.in);
          initFeatureList();
          initActionsList();
          while(true) {
