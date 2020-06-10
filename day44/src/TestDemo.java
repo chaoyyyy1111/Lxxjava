@@ -1,40 +1,47 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TestDemo {
-    public static void main1(String[] args) {
-       Scanner scan = new Scanner(System.in);
-       String str = scan.nextLine();
-       String[] strs = str.split(" ");
-       int W = Integer.parseInt(strs[0]);
-       int H = Integer.parseInt(strs[1]);
-       if(W - 1 >= 2 && H - 1 < 2) {
-           System.out.println(W*H-H*(W/2));
-       } else if(W - 1 < 2 && H - 1 >= 2) {
-           System.out.println(W*H-W*(H/2));
-       } else {
-           System.out.println(W*H-W*(H/2)-H*(W/2)+2*(W/2)*(H/2));
-       }
+    public static int func(int n) {
+        int ret = 1;
+        while(n > 0) {
+            ret *= n;
+            n--;
+        }
+        return ret;
     }
+    public static void main1(String[] args) {
 
+        Scanner scan = new Scanner(System.in);
+        while(scan.hasNext()) {
+            int n = scan.nextInt();
+            int ret = func(n);
+
+            System.out.println(ret);
+        }
+
+
+    }
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        String str = scan.nextLine();
-        String[] strs = str.split(" ");
-        int num1 = Integer.parseInt(strs[0]);
-        int num2 = Integer.parseInt(strs[1]);
-        if(num1 > num2) {
-            int tmp = num1;
-            num1 = num2;
-            num2 = tmp;
+        int n = scan.nextInt();
+        List<Character> list = new ArrayList<>();
+        if(n == 0) {
+            list.add((char)(48));
         }
-        if(num2 % num1 == 0) {
-            System.out.println(num2);
-        } else {
-            int tmp = num2;
-            while(num2 % num1 != 0) {
-                num2 += tmp;
-            }
-            System.out.println(num2);
+        while(n > 0) {
+            list.add((char)(n % 10 + 48));
+            n /= 10;
         }
+        char[] cs = new char[list.size()];
+        int i = 0;
+        for (char c :list) {
+            cs[i++] = c;
+        }
+        String str = new String(cs);
+        System.out.println(str);
     }
 }
+
+
