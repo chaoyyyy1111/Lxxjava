@@ -1,6 +1,7 @@
 package blog;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,8 +24,10 @@ public class Main {
         actionsList.add(new ArticleListAction());
         actionsList.add(new ArticlePublishAction());
         actionsList.add(new ArticleDetailAction());
+        actionsList.add(new ArticleCommentAction());
+        actionsList.add(new ArticleLike_relationAction());
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         DBUtil.initDataSource();
         Scanner scan = new Scanner(System.in);
          initFeatureList();

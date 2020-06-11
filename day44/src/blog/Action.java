@@ -1,5 +1,7 @@
 package blog;
 
- public interface Action {
-     void run();
+import java.sql.SQLException;
+
+public interface Action {
+     void run() throws SQLException;
 }
