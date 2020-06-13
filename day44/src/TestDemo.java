@@ -1,17 +1,27 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class TestDemo {
-    public static int countWays(int x, int y) {
+    static String[] ret =  {"0","1"};
+    public static String[] getGray(int n) {
         // write code here
-        if(x == 1 || y == 1) {
-            return 1;
+        if(n == 1) {
+            return ret;
         }
-        return countWays(x-1,y) + countWays(x,y-1);
+        String[] tmp = new String[2*ret.length];
+        int j = 0;
+        for (int i = 0; i < ret.length ; i++) {
+            tmp[j] = "0" + ret[i];
+            tmp[tmp.length - 1 - j] = "1" + ret[i];
+            j++;
+        }
+        ret = tmp;
+        getGray(n-1);
+        return ret;
     }
 
     public static void main(String[] args) {
-        System.out.println(countWays(3, 3));
-
+        String[] strs = getGray(3);
+        System.out.println(Arrays.toString(strs));
     }
 }
 
