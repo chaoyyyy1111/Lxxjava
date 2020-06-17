@@ -109,7 +109,7 @@ public class TestMain {
         }
         return sum+1;
     }
-    public static void main(String[] args) {
+    public static void main3(String[] args) {
         Scanner scan = new Scanner(System.in);
         while(scan.hasNextInt()) {
             int n = scan.nextInt();
@@ -122,4 +122,38 @@ public class TestMain {
         }
 
     }
+
+    public static void main4(String[] args) {
+        String str1 = "hello";
+        String str2 = "hel"+"lo";
+        System.out.println(str1 == str2);//true
+        String str3 = new String("hel")+"lo";
+        System.out.println(str1 == str3);//false
+    }
+    static int count = 0;
+    public static void func(long n) {
+        if(n % 1000000007 == 0) {
+            return;
+        }
+        count++;
+        func(2*n + 1 );
+    }
+    public static int func1(int count) {
+        if(count % 3 == 0) {
+            return count / 3 <= 100000 ? count/3 : -1;
+        } else if (count % 3 == 2) {
+            return count / 3 + 1 <= 100000 ? count/3 + 1 : -1;
+        } else if (count % 2 == 0)  {
+            return count / 2 <= 100000 ? count/2 : -1;
+        } else {
+            return -1;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        long n = scan.nextLong();
+        func(n);
+        System.out.println(func1(count));
+    }
+
 }
