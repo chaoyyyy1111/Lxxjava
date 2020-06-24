@@ -4,9 +4,9 @@ import java.io.IOException;
 public class FileDemo {
     public static void main(String[] args) {
         //String path = "D:\\录屏\\xixi.txt";
-        String path = "测试目录\\a\\huahua.txt";
+        String path = "测试目录\\非空目录";
         File file = new File(path);
-        /* System.out.println(file.isFile());
+        /*System.out.println(file.isFile());
         System.out.println(file.isAbsolute());
         System.out.println(file.isDirectory());
         System.out.println(file.isHidden());
@@ -17,15 +17,21 @@ public class FileDemo {
         System.out.println(file.canRead());
         System.out.println(file.canWrite());
         System.out.println(file.canExecute());
-        */
-        try {
+         */
+
+        /*try {
             boolean newFile = file.createNewFile();
             System.out.println(newFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //boolean mkdirs = file.mkdirs();
-        //System.out.println(mkdirs);
+         */
+        File[] files = file.listFiles();
+        for (File f:files) {
+            System.out.println(f.getAbsolutePath());
+        }
+
+
     }
 }
 
