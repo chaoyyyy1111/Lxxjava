@@ -1,20 +1,34 @@
-import java.io.*;
+import java.util.*;
 
 public class Test {
-    public static void main(String[] args) {
-        String path = "测试目录/gaga.txt";
-        try(InputStream is = new FileInputStream(path)) {
-            char[] buffer = new char[1024];
-            int n;
-            try(Reader reader = new InputStreamReader(is,"UTF-8")) {
-                while((n = reader.read(buffer)) != -1) {
-                    for (int i = 0; i < n ; i++) {
-                        System.out.println(buffer[i]);
-                    }
-                }
+    public static int func(int n) {
+        int count = 0;
+        int tmp = n;
+        while(tmp != 0) {
+            if(tmp % 2 == 1) {
+                count++;
             }
-        } catch(IOException e) {
-            e.printStackTrace();
+            tmp /= 2;
         }
+        if(count % 2 == 0) {
+            n = n|128;
+        }
+        return n;
+    }
+    public static void main(String[] args) {
+         Scanner scan = new Scanner(System.in);
+         while(scan.hasNext()) {
+             String str = scan.next();
+             for (int i = 0; i < str.length() ; i++) {
+                 char c = str.charAt(i);
+                 int n = func(c);
+                 for (int j = 7; j >= 0 ; j--) {
+                     System.out.print((n >> j) & 1);
+                 }
+                 System.out.println();
+             }
+         }
+
+
     }
 }
