@@ -30,9 +30,9 @@ import javax.swing.*;
 //这是柱形图的另一种效果，其实跟第一种相比都只有数据集发生了变化，再无其他变化
 public class Chart3 {
     ChartPanel frame1;
-    public Chart3(String title,String data1,String data2) throws SQLException {
-        XYDataset xydataset = createDataset(title,data1,data2);
-        JFreeChart jfreechart = ChartFactory.createTimeSeriesChart(title, "年度", "周转率(%)",xydataset, true, true, true);
+    public Chart3(String title,String data1,String data2,String year,int miu) throws SQLException {
+        XYDataset xydataset = createDataset(title,data1,data2,year,miu);
+        JFreeChart jfreechart = ChartFactory.createTimeSeriesChart(title, "年度", "周转率",xydataset, true, true, true);
         XYPlot xyplot = (XYPlot) jfreechart.getPlot();
         DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
         dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
@@ -45,9 +45,9 @@ public class Chart3 {
         jfreechart.getTitle().setFont(new Font("宋体",Font.BOLD,20));//设置标题字体
 
     }
-    public Chart3(String title,String data1,String data2,String data3) throws SQLException {
-        XYDataset xydataset = createDataset(title,data1,data2,data3);
-        JFreeChart jfreechart = ChartFactory.createTimeSeriesChart(title, "年度", "周转率(%)",xydataset, true, true, true);
+    public Chart3(String title,String data1,String data2,String data3,String year,int miu) throws SQLException {
+        XYDataset xydataset = createDataset(title,data1,data2,data3,year,miu);
+        JFreeChart jfreechart = ChartFactory.createTimeSeriesChart(title, "年度", "周转率",xydataset, true, true, true);
         XYPlot xyplot = (XYPlot) jfreechart.getPlot();
         DateAxis dateaxis = (DateAxis) xyplot.getDomainAxis();
         dateaxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
@@ -60,11 +60,11 @@ public class Chart3 {
         jfreechart.getTitle().setFont(new Font("宋体",Font.BOLD,20));//设置标题字体
 
     }
-    private static TimeSeries getTimeSeries(String title,String data1,String data2) throws SQLException {
+    private static TimeSeries getTimeSeries(String title,String data1,String data2,String year,int miu) throws SQLException {
         TimeSeries timeseries = new TimeSeries(title,
                 org.jfree.data.time.Year.class);
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2015 from a201001 where item in(?,?)";
+            String sql = "select item,a2015 from " +year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -80,13 +80,13 @@ public class Chart3 {
                             System.out.println(b);
                         }
                     }
-                    timeseries.add(new Year(2014),a/b*100);
+                    timeseries.add(new Year(miu-4),a/b);
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2016 from a201001 where item in(?,?)";
+            String sql = "select item,a2016 from " +year+ " where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -102,13 +102,13 @@ public class Chart3 {
                             System.out.println(b);
                         }
                     }
-                    timeseries.add(new Year(2015),a/b*100);
+                    timeseries.add(new Year(miu-3),a/b);
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2017 from a201001 where item in(?,?)";
+            String sql = "select item,a2017 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -124,13 +124,13 @@ public class Chart3 {
                             System.out.println(b);
                         }
                     }
-                    timeseries.add(new Year(2016),a/b*100);
+                    timeseries.add(new Year(miu-2),a/b);
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2018 from a201001 where item in(?,?)";
+            String sql = "select item,a2018 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -146,13 +146,13 @@ public class Chart3 {
                             System.out.println(b);
                         }
                     }
-                    timeseries.add(new Year(2017),a/b*100);
+                    timeseries.add(new Year(miu-1),a/b);
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2019 from a201001 where item in(?,?)";
+            String sql = "select item,a2019 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -168,17 +168,17 @@ public class Chart3 {
                             System.out.println(b);
                         }
                     }
-                    timeseries.add(new Year(2018),a/b*100);
+                    timeseries.add(new Year(miu),a/b);
                 }
             }
         }
         return timeseries;
     }
-    private static TimeSeries getTimeSeries(String title,String data1,String data2,String data3) throws SQLException {
+    private static TimeSeries getTimeSeries(String title,String data1,String data2,String data3,String year,int miu) throws SQLException {
         TimeSeries timeseries = new TimeSeries(title,
                 org.jfree.data.time.Year.class);
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2015 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2015 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -198,13 +198,13 @@ public class Chart3 {
                         }
 
                     }
-                    timeseries.add(new Year(2014),(a+b)/c);
+                    timeseries.add(new Year(miu-4),(a+b)/c);
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2016 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2016 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -224,12 +224,12 @@ public class Chart3 {
                         }
 
                     }
-                    timeseries.add(new Year(2015),(a+b)/c);
+                    timeseries.add(new Year(miu-3),(a+b)/c);
                 }
             }
         }
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2017 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2017 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -249,39 +249,13 @@ public class Chart3 {
                         }
 
                     }
-                    timeseries.add(new Year(2016),(a+b)/c);
-                }
-            }
-        }
-
-        try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2018 from a201001 where item in(?,?,?)";
-            try(PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1,data1);
-                ps.setString(2,data2);
-                ps.setString(3,data3);
-                try(ResultSet r = ps.executeQuery()) {
-                    double a = 0.0;
-                    double b = 0.0;
-                    double c = 0.0;
-                    while(r.next()) {
-                        if(r.getString(1).equals(data3)) {
-                            c = r.getDouble(2);
-                        } else if(r.getString(1).equals(data2)) {
-                            b = r.getDouble(2);
-                        } else {
-                            a = r.getDouble(2);
-
-                        }
-
-                    }
-                    timeseries.add(new Year(2017),(a+b)/c);
+                    timeseries.add(new Year(miu-2),(a+b)/c);
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2019 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2018 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -301,7 +275,33 @@ public class Chart3 {
                         }
 
                     }
-                    timeseries.add(new Year(2018),(a+b)/c);
+                    timeseries.add(new Year(miu-1),(a+b)/c);
+                }
+            }
+        }
+
+        try(Connection connection = DUtil.getConnection()) {
+            String sql = "select item,a2019 from "+year+" where item in(?,?,?)";
+            try(PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1,data1);
+                ps.setString(2,data2);
+                ps.setString(3,data3);
+                try(ResultSet r = ps.executeQuery()) {
+                    double a = 0.0;
+                    double b = 0.0;
+                    double c = 0.0;
+                    while(r.next()) {
+                        if(r.getString(1).equals(data3)) {
+                            c = r.getDouble(2);
+                        } else if(r.getString(1).equals(data2)) {
+                            b = r.getDouble(2);
+                        } else {
+                            a = r.getDouble(2);
+
+                        }
+
+                    }
+                    timeseries.add(new Year(miu),(a+b)/c);
                 }
             }
         }
@@ -311,14 +311,14 @@ public class Chart3 {
         return timeseries;
     }
 
-    private static XYDataset createDataset(String title,String data1,String data2,String data3) throws SQLException {  //这个数据集有点多，但都不难理解
+    private static XYDataset createDataset(String title,String data1,String data2,String data3,String year,int miu) throws SQLException {  //这个数据集有点多，但都不难理解
         TimeSeriesCollection timeseriescollection = new TimeSeriesCollection();
-        timeseriescollection.addSeries(getTimeSeries(title,data1,data2,data3));
+        timeseriescollection.addSeries(getTimeSeries(title,data1,data2,data3,year,miu));
         return timeseriescollection;
     }
-    private static XYDataset createDataset(String title,String data1,String data2) throws SQLException {  //这个数据集有点多，但都不难理解
+    private static XYDataset createDataset(String title,String data1,String data2,String year,int miu) throws SQLException {  //这个数据集有点多，但都不难理解
         TimeSeriesCollection timeseriescollection = new TimeSeriesCollection();
-        timeseriescollection.addSeries(getTimeSeries(title,data1,data2));
+        timeseriescollection.addSeries(getTimeSeries(title,data1,data2,year,miu));
         return timeseriescollection;
     }
 
@@ -346,7 +346,19 @@ public class Chart3 {
         //释放图形对象
         g2d.dispose();
     }
-    public static void main(String[] args) throws SQLException {
+    public static JFrame transfer(String year,int miu) throws SQLException {
+        JFrame frame=new JFrame("营运能力分析");
+        frame.setLayout(new GridLayout(2,2,10,10));
+        frame.add(new Chart3("应收账款周转率","营业收入","平应收",year,miu).getChartPanel());
+        frame.add(new Chart3("存货周转率","营业成本","平存货",year,miu).getChartPanel());
+        frame.add(new Chart3("流动资产周转率","营业收入","平流动资产",year,miu).getChartPanel());
+        frame.add(new Chart3("总资产周转率","营业收入","平资产",year,miu).getChartPanel());
+        frame.setBounds(50, 50, 800, 600);
+        frame.setVisible(true);
+        //savePic(frame);
+        return frame;
+    }
+   /* public static void main(String[] args) throws SQLException {
         JFrame frame=new JFrame("营运能力分析");
         frame.setLayout(new GridLayout(2,2,10,10));
         frame.add(new Chart3("应收账款周转率","营业收入","平应收").getChartPanel());
@@ -354,8 +366,10 @@ public class Chart3 {
         frame.add(new Chart3("流动资产周转率","营业收入","平流动资产").getChartPanel());
         frame.add(new Chart3("总资产周转率","营业收入","平资产").getChartPanel());
         frame.setBounds(50, 50, 800, 600);
-        frame.setVisible(true);
-        savePic(frame);
+        //frame.setVisible(true);
+        //savePic(frame);
 
     }
+
+    */
 }

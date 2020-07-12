@@ -23,8 +23,8 @@ import javax.swing.*;
 //这是柱形图的另一种效果，其实跟第一种相比都只有数据集发生了变化，再无其他变化
 public class Chart2 {
     ChartPanel frame1;
-    public Chart2(String title,String data1,String data2) throws SQLException {
-        CategoryDataset dataset = getDataSet(data1,data2);
+    public Chart2(String title,String data1,String data2,String year,int miu) throws SQLException {
+        CategoryDataset dataset = getDataSet(data1,data2,year,miu);
         JFreeChart chart = ChartFactory.createBarChart3D(
                 title, // 图表标题
                 "年度", // 目录轴的显示标签
@@ -51,8 +51,8 @@ public class Chart2 {
         frame1=new ChartPanel(chart,true);        //这里也可以用chartFrame,可以直接生成一个独立的Frame
 
     }
-    public Chart2(String title,String data1,String data2,String data3) throws SQLException {
-        CategoryDataset dataset = getDataSet(data1,data2,data3);
+    public Chart2(String title,String data1,String data2,String data3,String year,int miu) throws SQLException {
+        CategoryDataset dataset = getDataSet(data1,data2,data3,year,miu);
         JFreeChart chart = ChartFactory.createBarChart3D(
                 title, // 图表标题
                 "年度", // 目录轴的显示标签
@@ -79,10 +79,10 @@ public class Chart2 {
         frame1=new ChartPanel(chart,true);        //这里也可以用chartFrame,可以直接生成一个独立的Frame
 
     }
-    private static CategoryDataset getDataSet(String data1,String data2) throws SQLException {
+    private static CategoryDataset getDataSet(String data1,String data2,String year,int miu) throws SQLException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         try(Connection connection = DUtil.getConnection()) {
-                String sql = "select item,a2015 from a201001 where item in(?,?)";
+                String sql = "select item,a2015 from " +year+ " where item in(?,?)";
                 try(PreparedStatement ps = connection.prepareStatement(sql)) {
                     ps.setString(1,data1);
                     ps.setString(2,data2);
@@ -98,13 +98,13 @@ public class Chart2 {
                                 System.out.println(b);
                             }
                         }
-                        dataset.addValue(a/b, "2014", "2014");
+                        dataset.addValue(a/b, (miu-4)+"", (miu-4)+"");
                     }
                 }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2016 from a201001 where item in(?,?)";
+            String sql = "select item,a2016 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -120,13 +120,13 @@ public class Chart2 {
                             System.out.println(b);
                         }
                     }
-                    dataset.addValue(a/b, "2015", "2015");
+                    dataset.addValue(a/b, (miu-3)+"", (miu-3)+"");
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2017 from a201001 where item in(?,?)";
+            String sql = "select item,a2017 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -142,13 +142,13 @@ public class Chart2 {
                             System.out.println(b);
                         }
                     }
-                    dataset.addValue(a/b, "2016", "2016");
+                    dataset.addValue(a/b, (miu-2)+"", (miu-2)+"");
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2018 from a201001 where item in(?,?)";
+            String sql = "select item,a2018 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -164,13 +164,13 @@ public class Chart2 {
                             System.out.println(b);
                         }
                     }
-                    dataset.addValue(a/b, "2017", "2017");
+                    dataset.addValue(a/b, (miu-1)+"", (miu-1)+"");
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2019 from a201001 where item in(?,?)";
+            String sql = "select item,a2019 from "+year+" where item in(?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -186,16 +186,16 @@ public class Chart2 {
                             System.out.println(b);
                         }
                     }
-                    dataset.addValue(a/b, "2018", "2018");
+                    dataset.addValue(a/b, miu+"", miu+"");
                 }
             }
         }
         return dataset;
     }
-    private static CategoryDataset getDataSet(String data1,String data2,String data3) throws SQLException {
+    private static CategoryDataset getDataSet(String data1,String data2,String data3,String year,int miu) throws SQLException {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         try(Connection connection = DUtil.getConnection()) {
-                String sql = "select item,a2015 from a201001 where item in(?,?,?)";
+                String sql = "select item,a2015 from " +year+ " where item in(?,?,?)";
                 try(PreparedStatement ps = connection.prepareStatement(sql)) {
                     ps.setString(1,data1);
                     ps.setString(2,data2);
@@ -215,13 +215,13 @@ public class Chart2 {
                             }
 
                         }
-                        dataset.addValue((a+b)/c, "2014", "2014");
+                        dataset.addValue((a+b)/c, (miu-4)+"", (miu-4)+"");
                     }
                 }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2016 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2016 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -241,38 +241,12 @@ public class Chart2 {
                         }
 
                     }
-                    dataset.addValue((a+b)/c, "2015", "2015");
-                }
-            }
-        }
-        try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2017 from a201001 where item in(?,?,?)";
-            try(PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1,data1);
-                ps.setString(2,data2);
-                ps.setString(3,data3);
-                try(ResultSet r = ps.executeQuery()) {
-                    double a = 0.0;
-                    double b = 0.0;
-                    double c = 0.0;
-                    while(r.next()) {
-                        if(r.getString(1).equals(data3)) {
-                            c = r.getDouble(2);
-                        } else if(r.getString(1).equals(data2)) {
-                            b = r.getDouble(2);
-                        } else {
-                            a = r.getDouble(2);
-
-                        }
-
-                    }
-                    dataset.addValue((a+b)/c, "2016", "2016");
+                    dataset.addValue((a+b)/c, (miu-3)+"", (miu-3)+"");
                 }
             }
         }
-
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2018 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2017 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -292,13 +266,13 @@ public class Chart2 {
                         }
 
                     }
-                    dataset.addValue((a+b)/c, "2017", "2017");
+                    dataset.addValue((a+b)/c, (miu-2)+"", (miu-2)+"");
                 }
             }
         }
 
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2019 from a201001 where item in(?,?,?)";
+            String sql = "select item,a2018 from "+year+" where item in(?,?,?)";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1,data1);
                 ps.setString(2,data2);
@@ -318,7 +292,33 @@ public class Chart2 {
                         }
 
                     }
-                    dataset.addValue((a+b)/c, "2018", "2018");
+                    dataset.addValue((a+b)/c, (miu-1)+"", (miu-1)+"");
+                }
+            }
+        }
+
+        try(Connection connection = DUtil.getConnection()) {
+            String sql = "select item,a2019 from "+year+" where item in(?,?,?)";
+            try(PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1,data1);
+                ps.setString(2,data2);
+                ps.setString(3,data3);
+                try(ResultSet r = ps.executeQuery()) {
+                    double a = 0.0;
+                    double b = 0.0;
+                    double c = 0.0;
+                    while(r.next()) {
+                        if(r.getString(1).equals(data3)) {
+                            c = r.getDouble(2);
+                        } else if(r.getString(1).equals(data2)) {
+                            b = r.getDouble(2);
+                        } else {
+                            a = r.getDouble(2);
+
+                        }
+
+                    }
+                    dataset.addValue((a+b)/c, miu+"", miu+"");
                 }
             }
         }
@@ -351,7 +351,19 @@ public class Chart2 {
         //释放图形对象
         g2d.dispose();
     }
-    public static void main(String[] args) throws SQLException {
+    public static JFrame transfer(String year,int miu) throws SQLException {
+        JFrame frame=new JFrame("长期偿债能力分析");
+        frame.setLayout(new GridLayout(2,2,10,10));
+        frame.add(new Chart5("资产负债率","负债合计","资产总计",year,miu).getChartPanel());
+        frame.add(new Chart2("权益乘数","资产总计","股东权益合计",year,miu).getChartPanel());
+        frame.add(new Chart2("产权比率","负债合计","股东权益合计",year,miu).getChartPanel());
+        frame.add(new Chart2("利息保障倍数","利润总额","财务费用","财务费用",year,miu).getChartPanel());
+        frame.setBounds(50, 50, 800, 600);
+        frame.setVisible(true);
+        //savePic(frame);
+        return frame;
+    }
+    /*public static void main(String[] args) throws SQLException {
         JFrame frame=new JFrame("长期偿债能力分析");
         frame.setLayout(new GridLayout(2,2,10,10));
         frame.add(new Chart3("资产负债率","负债合计","资产总计").getChartPanel());
@@ -363,4 +375,6 @@ public class Chart2 {
         savePic(frame);
 
     }
+
+     */
 }

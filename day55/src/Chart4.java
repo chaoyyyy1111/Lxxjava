@@ -21,8 +21,8 @@ import org.jfree.data.general.DefaultPieDataset;
 
 public class Chart4{
     ChartPanel frame1;
-    public Chart4() throws SQLException {
-        DefaultPieDataset data = getDataSet();
+    public Chart4(String year) throws SQLException {
+        DefaultPieDataset data = getDataSet(year);
         JFreeChart chart = ChartFactory.createPieChart3D("资本结构",data,true,false,false);
         //设置百分比
         PiePlot pieplot = (PiePlot) chart.getPlot();
@@ -44,7 +44,7 @@ public class Chart4{
         piePlot.setLabelFont(new Font("宋体",Font.BOLD,10));//解决乱码
         chart.getLegend().setItemFont(new Font("黑体",Font.BOLD,10));
     }
-    private static DefaultPieDataset getDataSet() throws SQLException {
+    private static DefaultPieDataset getDataSet(String year) throws SQLException {
         DefaultPieDataset dataset = new DefaultPieDataset();
         double tAssets = 0.0;
         double cAssets = 0.0;
@@ -52,7 +52,7 @@ public class Chart4{
         double cLiabilities = 0.0;
         double sHE = 0.0;
         try(Connection connection = DUtil.getConnection()) {
-            String sql = "select item,a2019 from a201001 where item in(\"资产总计\",\"流动资产合计\",\"负债合计\",\"流动负债合计\",\"股东权益合计\")";
+            String sql = "select item,a2019 from " +year+ " where item in(\"资产总计\",\"流动资产合计\",\"负债合计\",\"流动负债合计\",\"股东权益合计\")";
             try(PreparedStatement ps = connection.prepareStatement(sql)) {
                  try(ResultSet r = ps.executeQuery()) {
                      while(r.next()) {
@@ -102,16 +102,33 @@ public class Chart4{
         //释放图形对象
         g2d.dispose();
     }
-    public static void main(String[] args) throws SQLException {
+    public static JFrame transfer(String year,int miu) throws SQLException {
         JFrame frame=new JFrame("发展能力分析与资本结构");
         frame.setLayout(new GridLayout(2,2,10,10));
-        frame.add(new Chart1("销售与利润增长率","营业收入","利润总额").getChartPanel());
-        frame.add(new Chart1("资产与股权资本增长率","资产总计","股东权益合计").getChartPanel());
+        frame.add(new Chart1("销售与利润增长率","营业收入","利润总额",year,miu).getChartPanel());
+        frame.add(new Chart1("资产与股权资本增长率","资产总计","股东权益合计",year,miu).getChartPanel());
         //frame.add(new Chart1("营业税金及附加与财务费用变化率图","营业税金及附加","财务费用").getChartPanel());
-        frame.add(new Chart4().getChartPanel());
+        frame.add(new Chart4(year).getChartPanel());
+        frame.setBounds(50, 50, 800, 600);
+        frame.setVisible(true);
+        return frame;
+        //savePic(frame);
+    }
+    /*public static void main(String[] args) throws SQLException {
+        JFrame frame=new JFrame("发展能力分析与资本结构");
+        frame.setLayout(new GridLayout(2,2,10,10));
+        frame.add(new Chart1("销售与利润增长率","营业收入","利润总额","a201000",2019).getChartPanel());
+        frame.add(new Chart1("资产与股权资本增长率","资产总计","股东权益合计","a201000",2019).getChartPanel());
+        //frame.add(new Chart1("营业税金及附加与财务费用变化率图","营业税金及附加","财务费用").getChartPanel());
+        frame.add(new Chart4("a201000").getChartPanel());
         frame.setBounds(50, 50, 800, 600);
         frame.setVisible(true);
         savePic(frame);
 
     }
+
+     */
+
+
+
 }
