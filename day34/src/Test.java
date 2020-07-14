@@ -244,6 +244,7 @@ public class Test {
         str.split("efe");
         System.out.println(Arrays.toString(str.split("efe")));
         System.out.println(Arrays.toString(mySplit(str,"efe")));
+
     }
 
 }

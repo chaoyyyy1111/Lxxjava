@@ -322,4 +322,28 @@ public class BinaryTree {
         }
         return head;
     }
+    public void adjustDown(int root,int len) {
+        int parent = root;
+        int child = 2*parent+1;
+        while (child < len) {
+            //0、判断是否有左右孩子  有的话 找到最大值 C下标表示最大值下标
+            if(child + 1 < len) {
+                  if(this.elem[child+1] > this.elem[child]) {
+                      child = child+1;
+                  }
+            }
+            //代码指向到这里，c表示最大值下标
+            if(this.elem[child] > this.elem[parent]) {
+                //交换
+                int tmp = this.elem[child];
+                this.elem[child] = this.elem[parent];
+                this.elem[parent] = tmp;
+            }else {
+                break;
+            }
+            parent = child;
+            child = 2*parent + 1;
+        }
+
+    }
 }

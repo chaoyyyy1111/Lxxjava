@@ -30,10 +30,8 @@ public class TestDemo {
         int count = Integer.parseInt(n);
         List<String[]> list = new ArrayList<>();
         for (int i = 0; i < count ; i++) {
-            String str1 = scan.nextLine();
-            String[] strs1 = str1.split(" ");
-            int k = Integer.parseInt(strs1[1]);
-            int m = Integer.parseInt(strs1[0]);
+            int m = Integer.parseInt(scan.nextLine());
+            int k = Integer.parseInt(scan.nextLine());
             String[] strs2 = new String[2*m];
             for (int j = 0; j < 2*m ; j++) {
                 strs2[j] = scan.nextLine();

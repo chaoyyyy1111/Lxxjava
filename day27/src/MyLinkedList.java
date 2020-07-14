@@ -232,7 +232,7 @@ public Node partition(int x) {
                    ae = cur;
                }else{
                    ae.next = cur;
-                   ae = be.next;
+                   ae = ae.next;
                }
            }
        cur = cur.next;

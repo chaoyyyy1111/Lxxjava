@@ -117,8 +117,10 @@ public class TestDemo4 {
 
     public static void main(String[] args) {
 
-        String str = "-2147483647";
-
+        String str = "_abc";
+        Set<Character> set = new HashSet<>();
+        System.out.println(str.toUpperCase());
+        
 
 
     }

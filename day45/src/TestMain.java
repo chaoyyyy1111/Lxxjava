@@ -150,10 +150,10 @@ public class TestMain {
         }
     }
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        long n = scan.nextLong();
-        func(n);
-        System.out.println(func1(count));
+        int i = 5;
+        int s = (i++)+(++i)+(i--)+(--i);
+        System.out.println(s);
+
     }
 
 }

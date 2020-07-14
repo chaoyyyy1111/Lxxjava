@@ -52,5 +52,9 @@ public class TestDemo {
         System.out.println(queue.poll());
         System.out.println(queue.peek());
         */
+       char a ='1';
+       int num = Integer.valueOf(a);
+        System.out.println(num);
+        Stack<Integer> stack = new Stack<>();
     }
 }

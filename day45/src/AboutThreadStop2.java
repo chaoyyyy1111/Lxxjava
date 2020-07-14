@@ -1,8 +1,10 @@
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class AboutThreadStop2 {
       static class A extends Thread{
           public A() {
+
               super("A");
           }
 
@@ -12,12 +14,14 @@ public class AboutThreadStop2 {
 
                   while(true) {
                       System.out.println("挖煤");
-                      boolean interrupted = t.isInterrupted();
+                      //TimeUnit.SECONDS.sleep(2);
+                      boolean interrupted = Thread.interrupted();
                       System.out.println("是否有人叫我停" + interrupted);
                       if(interrupted) {
                           System.out.println("运行时停止");
                           break;
                       }
+
                   }
 
 

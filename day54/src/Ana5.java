@@ -4,53 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 
-public class Ana5 {
+public class Ana5 extends AnalysisServlet {
     public static String func() {
-        double oIncome_2018 = 0;
-        double oIncome_2019 = 0;
-        double aReceivable_2017 = 0;
-        double aReceivable_2018 = 0;
-        double aReceivable_2019 = 0;
-        double oCost_2018 = 0;
-        double oCost_2019 = 0;
-        double inventory_2017 = 0;
-        double inventory_2018 = 0;
-        double inventory_2019 = 0;
-        double tAssets_2017 = 0;
-        double tAssets_2018 = 0;
-        double tAssets_2019 = 0;
-        try(Connection connection = DUtil.getConnection()) {
-            String sql =  "select item,2017_amount,2018_amount,2019_amount from the_balance_sheet where item in(\"营业收入\",\n" +
-                    "\"应收账款\",\"营业成本\",\"存货\",\"资产总计\")";
-            try(PreparedStatement ps = connection.prepareStatement(sql)) {
-                try(ResultSet r = ps.executeQuery()) {
-                    while(r.next()) {
-                        String s = r.getString(1);
-                        if(s.equals("营业收入")) {
-                            oIncome_2018 = r.getDouble(3);
-                            oIncome_2019 = r.getDouble(4);
-                        } else if(s.equals("应收账款")) {
-                            aReceivable_2017 = r.getDouble(2);
-                            aReceivable_2018 = r.getDouble(3);
-                            aReceivable_2019 = r.getDouble(4);
-                        } else if(s.equals("营业成本")) {
-                            oCost_2018 = r.getDouble(3);
-                            oCost_2019 = r.getDouble(4);
-                        } else if(s.equals("存货")) {
-                            inventory_2017 = r.getDouble(2);
-                            inventory_2018 = r.getDouble(3);
-                            inventory_2019 = r.getDouble(4);
-                        } else {
-                            tAssets_2017 = r.getDouble(2);
-                            tAssets_2018 = r.getDouble(3);
-                            tAssets_2019 = r.getDouble(4);
-                        }
-                    }
-                }
-            }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
         StringBuffer sb = new StringBuffer();
         sb.append("<h1>营运能力分析</h1>");
         sb.append("<p>本年应收账款周转率"+func1(oIncome_2019,aReceivable_2018,aReceivable_2019)+" "+

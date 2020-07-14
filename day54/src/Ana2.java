@@ -4,85 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 
-public class Ana2 {
+public class Ana2 extends AnalysisServlet {
     public static String func() {
-        double oIncome_2017 = 0;
-        double oIncome_2018 = 0;
-        double oIncome_2019 = 0;
-        double oCost_2017 = 0;
-        double oCost_2018 = 0;
-        double oCost_2019 = 0;
-        double bTS_2017 = 0;
-        double bTS_2018 = 0;
-        double bTS_2019 = 0;
-        double cSales_2017 = 0;
-        double cSales_2018 = 0;
-        double cSales_2019 = 0;
-        double mFees_2017 = 0;
-        double mFees_2018 = 0;
-        double mFees_2019 = 0;
-        double fCharges_2017 = 0;
-        double fCharges_2018 = 0;
-        double fCharges_2019 = 0;
-        double oProfit_2017 = 0;
-        double oProfit_2018 = 0;
-        double oProfit_2019 = 0;
-        double pTotal_2017 = 0;
-        double pTotal_2018 = 0;
-        double pTotal_2019 = 0;
-        double nProfit_2017 = 0;
-        double nProfit_2018 = 0;
-        double nProfit_2019 = 0;
-        try(Connection connection = DUtil.getConnection()) {
-            String sql =  "select item,2017_amount,2018_amount,2019_amount from the_balance_sheet where item in(\"营业收入\"," +
-                    "\"营业成本\",\"营业税金及附加\",\"销售费用\",\"管理费用\",\"财务费用\",\"营业利润\",\"利润总额\",\"净利润\")";
-            try(PreparedStatement ps = connection.prepareStatement(sql)) {
-                try(ResultSet r = ps.executeQuery()) {
-                    while(r.next()) {
-                        String s = r.getString(1);
-                        if(s.equals("营业收入")) {
-                            oIncome_2017 = r.getDouble(2);
-                            oIncome_2018 = r.getDouble(3);
-                            oIncome_2019 = r.getDouble(4);
-                        } else if(s.equals("营业成本")) {
-                            oCost_2017 = r.getDouble(2);
-                            oCost_2018 = r.getDouble(3);
-                            oCost_2019 = r.getDouble(4);
-                        } else if(s.equals("营业税金及附加")) {
-                            bTS_2017 = r.getDouble(2);
-                            bTS_2018 = r.getDouble(3);
-                            bTS_2019 = r.getDouble(4);
-                        } else if(s.equals("销售费用")) {
-                            cSales_2017 = r.getDouble(2);
-                            cSales_2018 = r.getDouble(3);
-                            cSales_2019 = r.getDouble(4);
-                        } else if(s.equals("管理费用")) {
-                            mFees_2017 = r.getDouble(2);
-                            mFees_2018 = r.getDouble(3);
-                            mFees_2019 = r.getDouble(4);
-                        } else if(s.equals("财务费用")){
-                            fCharges_2017 = r.getDouble(2);
-                            fCharges_2018 = r.getDouble(3);
-                            fCharges_2019 = r.getDouble(4);
-                        } else if(s.equals("营业利润")) {
-                            oProfit_2017 = r.getDouble(2);
-                            oProfit_2018 = r.getDouble(3);
-                            oProfit_2019 = r.getDouble(4);
-                        } else if(s.equals("利润总额")) {
-                            pTotal_2017 = r.getDouble(2);
-                            pTotal_2018 = r.getDouble(3);
-                            pTotal_2019 = r.getDouble(4);
-                        } else {
-                            nProfit_2017 = r.getDouble(2);
-                            nProfit_2018 = r.getDouble(3);
-                            nProfit_2019 = r.getDouble(4);
-                        }
-                    }
-                }
-            }
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
         StringBuffer sb = new StringBuffer();
         sb.append("<h1>比较利润表分析</h1>");
         sb.append("<p>本年营业收入变化率"+func1(oIncome_2018,oIncome_2019)+" "+

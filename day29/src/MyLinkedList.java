@@ -6,8 +6,9 @@ class Node {
         this.next = null;
     }
 }
-public class MyLinkedList {
+    public class MyLinkedList {
     public Node head;
+    //头插法
     public void addFirst(int data) {
         Node node = new Node(data);
         if(this.head == null) {
@@ -17,6 +18,7 @@ public class MyLinkedList {
             this.head = node;
         }
     }
+    //尾插法
     public void addLast(int data) {
         Node node = new Node(data);
         if(this.head == null) {
@@ -29,23 +31,7 @@ public class MyLinkedList {
             cur.next = node;
         }
     }
-    public int size() {
-        Node cur = this.head;
-        int count = 0;
-        while(cur != null) {
-            cur = cur.next;
-            count++;
-        }
-        return count;
-    }
-    private Node searchPrev (int index) {
-        Node cur = this.head;
-        while(index - 1 != 0) {
-            cur = cur.next;
-            index--;
-        }
-        return cur;
-    }
+    //任意位置插入,第一个数据节点为0号下标
     public void addIndex(int index,int data) {
         Node node = new Node(data);
         if(index < 0 || index > size()) {
@@ -63,6 +49,15 @@ public class MyLinkedList {
         node.next = prev.next;
         prev.next = node;
     }
+    private Node searchPrev (int index) {
+        Node cur = this.head;
+        while(index - 1 != 0) {
+            cur = cur.next;
+            index--;
+        }
+        return cur;
+    }
+    //查找是否包含关键字key
     public boolean contains(int key) {
         Node cur = this.head;
         while(cur != null) {
@@ -73,17 +68,7 @@ public class MyLinkedList {
         }
         return false;
     }
-    public void display () {
-        Node cur = this.head;
-        while(cur != null) {
-            System.out.print(cur.data+" ");
-            cur = cur.next;
-        }
-        System.out.println();
-    }
-    public void clear() {
-        this.head = null;
-    }
+    //删除第一次出现关键字为key的节点
     public void remove(int key) {
         if(this.head == null) {
             return;
@@ -100,6 +85,50 @@ public class MyLinkedList {
             }
             prev = prev.next;
         }
+    }
+    //删除所有值为key的节点
+    public void removeAllKey(int key) {
+        if(this.head == null) {
+            return;
+        }
+        Node prev = this.head;
+        Node cur = this.head.next;
+        Node newHead = null;
+        while(cur != null) {
+            Node curNext = cur.next;
+            if(cur.next == null) {
+                newHead = cur;
+            }
+            prev.next = cur.next;
+            prev = cur;
+            cur = curNext;
+        }
+        if(this.head.data == key) {
+            this.head = this.head.next;
+        }
+    }
+    //得到单链表的长度
+    public int size() {
+        Node cur = this.head;
+        int count = 0;
+        while(cur != null) {
+            cur = cur.next;
+            count++;
+        }
+        return count;
+    }
+    //打印单链表
+    public void display () {
+        Node cur = this.head;
+        while(cur != null) {
+            System.out.print(cur.data+" ");
+            cur = cur.next;
+        }
+        System.out.println();
+    }
+    //清空单链表
+    public void clear() {
+        this.head = null;
     }
 
 
