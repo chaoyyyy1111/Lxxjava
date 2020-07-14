@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset = "utf-8">
+ <title>报表分析系统</title>
+ <style type = "text/css">
+ body{background-image:url(xixiblue.jpg)}
+  
+  #a{
+	width: 250px;
+	height:210px;
+    border:5px outset #4682B4;
+    padding:30px;
+    margin:30px	
+	
+  }
+  #a{
+    background:#6495ED;	
+	position: absolute;
+    top: 150px;
+    left: 500px;
+	
+  }
+  
+  
+  ul#z{
+float:left;
+width:100%;
+padding:0;
+margin:0;
+list-style-type:none;
+position: absolute;
+    top: 20px;
+    left: 410px;
+}
+
+a.apple{
+float:left;
+width:10em;
+text-decoration:none;
+color:white;
+padding:0.2em 0.6em;
+font-size:20px;
+}
+
+a.apple:hover {color:#B0C4DE}
+  </style>
+  
+  <div id = "b">
+<ul id = "z"> 
+<li><a  class = apple href="http://127.0.0.1:8080/new/happy.html">首页</a></li> 
+ 
+<li><a  class = apple href="http://127.0.0.1:8080/new/caiwufenxi.html">报表分析</a></li> 
+ 
+<li><a  class = apple href="http://127.0.0.1:8080/new/shujuxiazai.html">报表分析数据下载</a></li> 
+
+</ul> 
+</div>
+
+<div id = "a">
+	<form method = "get" action = "http://127.0.0.1:8080/new/faf">
+	<label  for = "a1" >股票代码</label>
+		<input type = "text" id = "a1" name = "astock" /> <br><br>
+	<label for = "a2">年份</label>
+	<select name = "ayear">
+	 <option value = "2019">2019</option>
+	 <option value = "2018">2018</option>
+	</select> <br><br>
+	
+	
+	<label for = "a3">下载项目</label>
+	<select name = "item">
+	 <option value = "bijiaozichan">比较资产负债表分析</option>
+	 <option value = "bijiaolirun">比较利润表分析</option>
+	 <option value = "changqichangzhai">长期偿债能力分析</option>
+	 <option value = "duanqichangzhai">短期偿债能力分析</option>
+	 <option value = "yingyun">营运能力分析</option>
+	 <option value = "yingli">盈利能力分析</option>
+	 <option value = "fazhan">发展能力分析与资本结构</option>
+	</select><br><br>
+	
+	<button type = "submit" >下载数据</button>
+	</form >
+	</div>
