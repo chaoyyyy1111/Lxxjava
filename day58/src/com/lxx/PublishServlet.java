@@ -2,13 +2,12 @@ package com.lxx;
 
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import javax.servlet.http.*;
+import java.io.*;
 
+@MultipartConfig
 @WebServlet("/publish")
 public class PublishServlet extends HttpServlet {
     @Override
@@ -21,6 +20,21 @@ public class PublishServlet extends HttpServlet {
         }
         String title = req.getParameter("title");
         String content = req.getParameter("content");
+        Part imagePart = req.getPart("image");
+        InputStream is = imagePart.getInputStream();
+        try(OutputStream os = new FileOutputStream("D:\\照片\\hello.doc")) {
+            byte[] buf = new byte[1024];
+            while(true) {
+                int len = is.read(buf);
+                if(len == -1) {
+                    break;
+                }
+                os.write(buf ,0,len);
+                os.flush();
+            }
+
+        }
+
         int id = user.id;
         Article.publish(id,title,content);
         resp.sendRedirect("/list.html");
