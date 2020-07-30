@@ -31,7 +31,7 @@ public class TestDemo {
             return false;
 
     }
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         Scanner scan = new Scanner(System.in);
         String s = scan.nextLine();
         if(s.length() % 2 == 0) {
@@ -61,4 +61,27 @@ public class TestDemo {
         }
 
     }
+	import java.util.ArrayList;
+    public ArrayList<Integer> printMatrix(int [][] matrix) {
+       ArrayList<Integer> list = new ArrayList<>();
+       int n = matrix.length;
+       int c = matrix[0].length;
+       int min = n < c ? n : c;
+        for(int k = 0;k < (min+1)/2 ;k++) {
+           for(int i = k;i <= c-1-k;i++ ) {
+               list.add(matrix[k][i]);
+           }
+           for(int i = k+1;i <= c-1-k;i++) {
+               list.add(matrix[i][c-1-k]);
+           }
+           for(int i = c-2-k;i >= k; i--) {
+               list.add(matrix[n-1-k][i]);
+           }
+           for(int i = n-2-k; i >= k+1;i--) {
+               list.add(matrix[i][k]);
+           }
+       } 
+       return list;
+    }
+
 }
