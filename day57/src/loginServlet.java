@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
@@ -23,5 +26,15 @@ public class loginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("user",user);
         writer.println("<p>登录成功</p>");
+        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return 0;
+            }
+        });
+        ArrayList<Integer> array = new ArrayList<>();
+
+        StringBuffer sb = new StringBuffer();
+
     }
 }

@@ -14,6 +14,7 @@ public class statusServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(307);
         resp.setHeader("Location","/haha");
+
     }
 
     @Override

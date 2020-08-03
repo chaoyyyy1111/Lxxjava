@@ -61,9 +61,13 @@ public class TestDemo {
         }
 
     }
-	import java.util.ArrayList;
+
     public ArrayList<Integer> printMatrix(int [][] matrix) {
        ArrayList<Integer> list = new ArrayList<>();
+       String s = "abcd\\scc\\ss";
+       s.lastIndexOf("\\");
+        Map<String,Integer> map = new HashMap<>();
+        \
        int n = matrix.length;
        int c = matrix[0].length;
        int min = n < c ? n : c;
